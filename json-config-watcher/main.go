@@ -1,3 +1,42 @@
+/*
+The "JSON Config Watcher"
+Now that you've mastered basic concurrency, let's look at File I/O, JSON handling, and Long-running loops. This is a common pattern for background workers or "sidecars" in cloud-native apps. ☁️
+
+📋 The Goal:
+Build a program that reads a configuration file and automatically reloads it whenever you save changes to the file, without stopping the program.
+
+📝 Step 1: Create a config.json
+Create a simple file in your project folder:
+
+# JSON
+
+	{
+	    "app_name": "GoWatcher",
+	    "version": "1.0.0",
+	    "debug_mode": true
+	}
+
+🛠️ Step 2: The Coding Requirements:
+Define the Struct: Create a Config struct. Use Struct Tags (e.g., `json:"app_name"`) to map the JSON keys to your struct fields. 🏷️
+
+State Management: Store the "Last Modified" time of the file in a variable. 🕒
+
+The Watcher Loop:
+
+Use an infinite loop for { ... }.
+
+Use os.Stat() to check the file's metadata.
+
+Compare the ModTime() with your stored version.
+
+The Reload Logic:
+
+If the file is newer, use os.ReadFile() and json.Unmarshal() to update your struct. 🔄
+
+Print: "Config Updated: [New Values]"
+
+Efficiency: Use time.Sleep(2 * time.Second) so you don't burn 100% of your CPU checking the file millions of times per second. 😴
+*/
 package main
 
 import (
